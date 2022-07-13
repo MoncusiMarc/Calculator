@@ -1,0 +1,107 @@
+:root{
+    --clr-dark: #000;
+    --clr-light: #FFF;
+    --clr-shadow: #666;
+    --clr-darkestgreen: #071821;
+    --clr-darkgreen: #306850;
+    --clr-lightgreen: #86c06c;
+    --clr-lightestgreen: #e0f8cf;
+
+    --ff-primary: 'Roboto',sans-serif;
+    --ff-secondary: 'Playfair Display', serif;
+}
+
+*{
+   box-sizing: border-box;
+}
+
+html{
+    height: 100%;
+    background: linear-gradient(34deg, var(--clr-darkestgreen) 0%, var(--clr-lightgreen) 33%, var(--clr-darkgreen) 66%, var(--clr-lightestgreen) 100%);
+    font-family: var(--ff-primary);
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin:0;
+}
+
+/*------------------------------------*/
+#HeaderImage{
+    width: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*-------------------------------------*/
+#Calculator{
+    width: 40%;
+    margin-inline: auto;
+    margin-top: 1rem;
+    padding:1rem;
+    background-color: var(--clr-lightgreen);
+    border-radius: 1rem;
+    border: solid var(--clr-darkestgreen);
+}
+#Display{
+    border: solid var(--clr-darkestgreen);
+    width: 100%;
+    height: 3rem;
+    border-radius: 1rem;
+    background-color: var(--clr-lightestgreen);
+}
+.Keyboard{
+    width: 100%;
+    height: 100%;
+    display:grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: auto;
+    gap:0.5rem;
+    padding:1rem;
+    grid-template-areas:
+    "clear clear . div"
+    "n7 n8 n9 multi"
+    "n4 n5 n6 subs"
+    "n1 n2 n3 addi"
+    "n0 comma equal equal";
+}
+#Calculator input[type=button]{
+    width: 100%;
+    height: 3rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--clr-darkestgreen);
+    box-shadow: 0 1px var(--clr-shadow);
+    border: solid var(--clr-darkestgreen);
+    border-radius: 1rem;
+    background-color: var(--clr-lightestgreen);
+    align-self: center;
+
+}
+
+#Calculator input[type=button]:hover{
+    color: var(--clr-lightestgreen);
+    background-color: var(--clr-darkgreen);
+}
+#Calculator input[type=button]:active {
+    background-color:var(--clr-darkgreen);
+    box-shadow: 0 1px var(--clr-shadow);
+    transform: translateY(1px);
+}
+#n1{grid-area: n1;}
+#n2{grid-area: n2;}
+#n3{grid-area: n3;}
+#n4{grid-area: n4;}
+#n5{grid-area: n5;}
+#n6{grid-area: n6;}
+#n7{grid-area: n7;}
+#n8{grid-area: n8;}
+#n9{grid-area: n9;}
+#n0{grid-area: n0;}
+#comma{grid-area: comma;}
+#add{grid-area: addi;}
+#subs{grid-area: subs;}
+#multi{grid-area: multi;}
+#div{grid-area: div;}
+#equal{grid-area: equal;}
+#clear{grid-area: clear;}

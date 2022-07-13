@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Calculator</title>
+    <link rel="icon" type="image/png" href="Images/0.png">
+
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculator">
+    <meta name="keywords" content="HTML,CSS,JS">
+    <meta name="author" content="Marc Moncusí">
+
+    <link rel="stylesheet" href="Css/Style.css">
+    <script src="Js/Functions.js"></script>
+</head>
+<body>
+    <header>
+        <img id="HeaderImage" src="Images/calculator.png" alt="Calculator">
+    </header>
+    <div id="Calculator">   
+        <div id="Display"></div>
+        <div class="Keyboard">
+            <input onclick="insert('1')" id="n1" type="button" value="1">
+            <input onclick="insert('2')" id="n2" type="button" value="2">
+            <input onclick="insert('3')" id="n3" type="button" value="3">
+            <input onclick="insert('4')" id="n4" type="button" value="4">
+            <input onclick="insert('5')" id="n5" type="button" value="5">
+            <input onclick="insert('6')" id="n6" type="button" value="6">
+            <input onclick="insert('7')" id="n7" type="button" value="7">
+            <input onclick="insert('8')" id="n8" type="button" value="8">
+            <input onclick="insert('9')" id="n9" type="button" value="9">
+            <input onclick="insert('0')" id="n0" type="button" value="0">
+            <input id="add" type="button" value="+">
+            <input id="subs" type="button" value="-">
+            <input id="multi" type="button" value="x">
+            <input id="div" type="button" value="/">
+            <input id="equal" type="button" value="=">
+            <input onclick="insert('.')" id="comma" type="button" value=",">
+            <input onclick="clear()" id="clear" type="button" value="Clear">
+        </div>
+    </div>
+</body>

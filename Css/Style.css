@@ -16,77 +16,83 @@
 }
 
 html{
+    margin:0;
     height: 100%;
     background: linear-gradient(34deg, var(--clr-darkestgreen) 0%, var(--clr-lightgreen) 33%, var(--clr-darkgreen) 66%, var(--clr-lightestgreen) 100%);
-    font-family: var(--ff-primary);
-    font-weight: 300;
     font-size: 1rem;
     line-height: 1.6;
-    margin:0;
+    font-family: var(--ff-primary);
+    font-weight: 300;
 }
 
 /*------------------------------------*/
 #HeaderImage{
-    width: 50%;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
+    width: 50%;
 }
 
 /*-------------------------------------*/
 #Calculator{
-    width: 30%;
     margin-inline: auto;
     margin-top: 1rem;
-    padding:1rem;
-    background-color: var(--clr-lightgreen);
-    border-radius: 1rem;
+    width: 40%;
     border: solid var(--clr-darkestgreen);
+    border-radius: 1rem;
+    padding:1rem;
+    background-color: var(--clr-lightgreen);  
 }
 #Display{
     border: solid var(--clr-darkestgreen);
+    border-radius: 1rem;
     width: 100%;
     height: 3rem;
-    border-radius: 1rem;
     background-color: var(--clr-lightestgreen);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--clr-darkestgreen);
 }
 .Keyboard{
-    width: 100%;
-    height: 100%;
+    
     display:grid;
     grid-template-columns: repeat(4,1fr);
     grid-template-rows: auto;
     gap:0.5rem;
-    padding:1rem;
     grid-template-areas:
     "clear clear . div"
     "n7 n8 n9 multi"
     "n4 n5 n6 subs"
     "n1 n2 n3 addi"
     "n0 comma equal equal";
+    width: 100%;
+    height: 100%;
+    padding:1rem;
 }
 #Calculator input[type=button]{
-    width: 100%;
-    height: 3rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--clr-darkestgreen);
+    
+    
+    
     box-shadow: 0 1px var(--clr-shadow);
     border: solid var(--clr-darkestgreen);
     border-radius: 1rem;
+    width: 100%;
+    height: 3rem;
     background-color: var(--clr-lightestgreen);
+    font-size: 1.5rem;
+    font-weight: 600;
     align-self: center;
+    color: var(--clr-darkestgreen);
 
 }
 
 #Calculator input[type=button]:hover{
-    color: var(--clr-lightestgreen);
     background-color: var(--clr-darkgreen);
+    color: var(--clr-lightestgreen);
 }
 #Calculator input[type=button]:active {
-    background-color:var(--clr-darkgreen);
-    box-shadow: 0 1px var(--clr-shadow);
     transform: translateY(1px);
+    box-shadow: 0 1px var(--clr-shadow);
+    background-color:var(--clr-darkgreen);
 }
 #n1{grid-area: n1;}
 #n2{grid-area: n2;}

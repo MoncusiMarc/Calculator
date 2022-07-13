@@ -2,6 +2,8 @@ let firstElement='0';
 let secondElement='0';
 let sign;
 
+
+
 function clearing(){
     console.log("we made it here");
     firstElement='0';

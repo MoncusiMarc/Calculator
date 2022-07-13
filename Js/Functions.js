@@ -2,7 +2,9 @@ let firstElement='0';
 let secondElement='0';
 let sign;
 
-
+document.body.addEventListener("keypress",(e)=>{
+    console.log(e.key);
+});
 
 function clearing(){
     firstElement='0';
@@ -23,6 +25,7 @@ function insert(element){
     }
     display();
 }
+
 function insertComma(){
     switch(true){
         case (secondElement.includes(',')):
@@ -35,6 +38,7 @@ function insertComma(){
     }
     display();
 }
+
 function polarity(){
     switch(true){
         case (secondElement=='0'):

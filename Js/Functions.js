@@ -18,7 +18,7 @@ function insert(int){
     display();
 }
 
-function display(int){
+function display(){
     const display = document.getElementById("Display");
     display.innerText=secondElement;
 }

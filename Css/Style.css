@@ -59,7 +59,7 @@ html{
     grid-template-rows: auto;
     gap:0.5rem;
     grid-template-areas:
-    "clear clear . div"
+    "clear clear plusminus div"
     "n7 n8 n9 multi"
     "n4 n5 n6 subs"
     "n1 n2 n3 addi"

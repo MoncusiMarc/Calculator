@@ -2,9 +2,6 @@ let firstElement='0';
 let secondElement='0';
 let sign;
 
-document.body.addEventListener("keypress",(e)=>{
-    console.log(e.key);
-});
 
 function clearing(){
     firstElement='0';
@@ -17,7 +14,7 @@ function insert(element){
         case (secondElement=='0'):
             secondElement=element;
             break;
-        case (secondElement.length>=10):    //TODO: function with only number counting
+        case (numberCount(secondElement)>=10):
             break;
         default:
             secondElement+=element;
@@ -28,12 +25,12 @@ function insert(element){
 
 function insertComma(){
     switch(true){
-        case (secondElement.includes(',')):
-        case(secondElement.length>=10):     //TODO: function with only number counting
+        case (secondElement.includes('.')):
+        case (numberCount(secondElement)>=10):
             break;
         case (secondElement=='0'):  
         default:
-            secondElement+=',';
+            secondElement+='.';
             break;
     }
     display();
@@ -42,17 +39,20 @@ function insertComma(){
 function polarity(){
     switch(true){
         case (secondElement=='0'):
-        case (secondElement=='0,'):
+        case (secondElement=='0.'):
             break;
         default:
-            secondElement=-secondElement;
+            secondElement=String(-secondElement); //Numbers don't have replace function.
             break;
     }
     display();
 }
 
+function numberCount(numbers){
+    return numbers.replace(/[^0-9]/g, '').length;
+}
+
 function display(){
-    console.log(secondElement);
     const display = document.getElementById("Display");
-    display.innerText=secondElement;
+    display.innerText=secondElement.replace(".",",");
 }

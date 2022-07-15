@@ -64,6 +64,9 @@ function insertOperator(operator){
     }
     //display();
 }
+function equals(){
+    
+}
 
 function numberCount(numbers){
     return numbers.replace(/[^0-9]/g, '').length;

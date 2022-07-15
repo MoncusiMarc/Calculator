@@ -1,24 +1,28 @@
-let firstElement='0';
-let secondElement='0';
-let sign;
+let memoryNumber='';
+let screenNumber='';
+let sign='';
 
+const buttons = document.querySelectorAll("input");
 
 function clearing(){
-    firstElement='0';
-    secondElement='0';
+    unhighlight();
+    memoryNumber='0';
+    screenNumber='0';
+    sign='';
     display();  
 }
 
-function insert(element){
+function insert(number){
     switch(true){
-        case (secondElement==''):
-        case (secondElement=='0'):
-            secondElement=element;
+        case (numberCount(screenNumber)>=10):
+        case (screenNumber=="ERROR"):
             break;
-        case (numberCount(secondElement)>=10):
+        case (screenNumber==''):
+        case (screenNumber=='0'):
+            screenNumber=number;
             break;
         default:
-            secondElement+=element;
+            screenNumber+=number;
             break;
     }
     display();
@@ -26,14 +30,15 @@ function insert(element){
 
 function insertComma(){
     switch(true){
-        case (secondElement.includes('.')):
-        case (numberCount(secondElement)>=10):
+        case (screenNumber.includes('.')):
+        case (numberCount(screenNumber)>=10):
+        case (screenNumber=="ERROR"):
             break;
-        case (secondElement==''):
-            secondElement='0';
-        case (secondElement=='0'):
+        case (screenNumber==''):
+            screenNumber='0';
+        case (screenNumber=='0'):
         default:
-            secondElement+='.';
+            screenNumber+='.';
             break;
     }
     display();
@@ -41,31 +46,46 @@ function insertComma(){
 
 function polarity(){
     switch(true){
-        case (secondElement==''):
-        case (secondElement=='0'):
-        case (secondElement=='0.'):
+        case (screenNumber=='ERROR'):
+        case (screenNumber==''):
+        case (screenNumber=='0'):
+        case (screenNumber=='0.'):
             break;
         default:
-            secondElement=String(-secondElement); //Numbers don't have replace function.
+            screenNumber=String(-screenNumber); //Numbers don't have replace function.
             break;
     }
     display();
 }
 
-function insertOperator(operator){
-    switch(true){
-        case (sign==null):
-            firstElement=secondElement;
-            secondElement='';
-        case (sign!=null):
-            sign=operator;
-
-            break;
-    }
+function insertOperator(input,operator){
+    unhighlight();
+    highlight(input);
+    
+    //switch(true){
+    //    case (sign==''):
+    //        memoryNumber=screenNumber;
+    //        screenNumber='';
+    //    default:
+    //        sign=operator;
+    //        break;
+    //}
     //display();
 }
 function equals(){
-    
+    unhighlight();
+
+}
+
+function highlight(input){
+    input.classList.add("highlight");
+}
+
+function unhighlight(){
+            const buttons = document.querySelectorAll("input");
+    buttons.forEach(function(b){
+        b.classList.remove("highlight");
+    });
 }
 
 function numberCount(numbers){
@@ -73,9 +93,9 @@ function numberCount(numbers){
 }
 
 function display(){
-    console.log(firstElement);
-    console.log(secondElement);
+    console.log(memoryNumber);
+    console.log(screenNumber);
     console.log(sign);
     const display = document.getElementById("Display");
-    display.innerText=secondElement.replace(".",",");
+    display.innerText=screenNumber.replace(".",",");
 }

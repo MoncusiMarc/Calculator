@@ -95,6 +95,11 @@ html{
     background-color:var(--clr-darkgreen);
 }
 
+#Calculator input[type=button].highlight{
+    background-color: var(--clr-darkgreen);
+    color: var(--clr-lightestgreen);
+}
+
 #n1{grid-area: n1;}
 #n2{grid-area: n2;}
 #n3{grid-area: n3;}

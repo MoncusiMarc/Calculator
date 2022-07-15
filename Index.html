@@ -31,10 +31,10 @@
             <input id="n8" type="button" value="8" onclick="insert('8')">
             <input id="n9" type="button" value="9" onclick="insert('9')">
             <input id="n0" type="button" value="0" onclick="insert('0')">
-            <input id="add" type="button" value="+" onclick="insertOperator('+')">
-            <input id="subs" type="button" value="-" onclick="insertOperator('-')">
-            <input id="multi" type="button" value="x" onclick="insertOperator('*')">
-            <input id="div" type="button" value="/" onclick="insertOperator('/')">
+            <input id="add" type="button" value="+" onclick="insertOperator(this,'+')">
+            <input id="subs" type="button" value="-" onclick="insertOperator(this,'-')">
+            <input id="multi" type="button" value="x" onclick="insertOperator(this,'*')">
+            <input id="div" type="button" value="/" onclick="insertOperator(this,'/')">
             <input id="equal" type="button" value="=" onclick="equals()">
             <input id="plusminus" type="button" value="+/-" onclick="polarity()">
             <input id="comma" type="button" value="," onclick="insertComma()">

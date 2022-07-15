@@ -18,7 +18,7 @@
     <header>
         <img id="HeaderImage" src="Images/calculator.png" alt="Calculator">
     </header>
-    <div id="Calculator" >   
+    <div id="Calculator">   
         <div id="Display">0</div>
         <div class="Keyboard">
             <input onclick="insert('1')" id="n1" type="button" value="1">
@@ -31,11 +31,11 @@
             <input onclick="insert('8')" id="n8" type="button" value="8">
             <input onclick="insert('9')" id="n9" type="button" value="9">
             <input onclick="insert('0')" id="n0" type="button" value="0">
-            <input id="add" type="button" value="+">
-            <input id="subs" type="button" value="-">
-            <input id="multi" type="button" value="x">
-            <input id="div" type="button" value="/">
-            <input id="equal" type="button" value="=">
+            <input onclick="insertOperator('+')" id="add" type="button" value="+">
+            <input onclick="insertOperator('-')" id="subs" type="button" value="-">
+            <input onclick="insertOperator('*')" id="multi" type="button" value="x">
+            <input onclick="insertOperator('/')" id="div" type="button" value="/">
+            <input onclick="equals()" id="equal" type="button" value="=">
             <input onclick="polarity()" id="plusminus" type="button" value="+/-">
             <input onclick="insertComma()" id="comma" type="button" value=",">
             <input onclick="clearing()" id="clear" type="button" value="Clear">

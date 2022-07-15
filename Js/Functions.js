@@ -11,6 +11,7 @@ function clearing(){
 
 function insert(element){
     switch(true){
+        case (secondElement==''):
         case (secondElement=='0'):
             secondElement=element;
             break;
@@ -28,7 +29,9 @@ function insertComma(){
         case (secondElement.includes('.')):
         case (numberCount(secondElement)>=10):
             break;
-        case (secondElement=='0'):  
+        case (secondElement==''):
+            secondElement='0';
+        case (secondElement=='0'):
         default:
             secondElement+='.';
             break;
@@ -38,6 +41,7 @@ function insertComma(){
 
 function polarity(){
     switch(true){
+        case (secondElement==''):
         case (secondElement=='0'):
         case (secondElement=='0.'):
             break;
@@ -48,11 +52,27 @@ function polarity(){
     display();
 }
 
+function insertOperator(operator){
+    switch(true){
+        case (sign==null):
+            firstElement=secondElement;
+            secondElement='';
+        case (sign!=null):
+            sign=operator;
+
+            break;
+    }
+    //display();
+}
+
 function numberCount(numbers){
     return numbers.replace(/[^0-9]/g, '').length;
 }
 
 function display(){
+    console.log(firstElement);
+    console.log(secondElement);
+    console.log(sign);
     const display = document.getElementById("Display");
     display.innerText=secondElement.replace(".",",");
 }

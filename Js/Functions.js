@@ -5,7 +5,7 @@ let sign='';
 const buttons = document.querySelectorAll("input");
 
 function clearing(){
-    unhighlight();
+    endHighlight();
     memoryNumber='0';
     screenNumber='0';
     sign='';
@@ -59,7 +59,7 @@ function polarity(){
 }
 
 function insertOperator(input,operator){
-    unhighlight();
+    endHighlight();
     highlight(input);
     
     //switch(true){
@@ -73,7 +73,7 @@ function insertOperator(input,operator){
     //display();
 }
 function equals(){
-    unhighlight();
+    endHighlight();
 
 }
 
@@ -81,7 +81,7 @@ function highlight(input){
     input.classList.add("highlight");
 }
 
-function unhighlight(){
+function endHighlight(){
             const buttons = document.querySelectorAll("input");
     buttons.forEach(function(b){
         b.classList.remove("highlight");

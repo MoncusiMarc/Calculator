@@ -75,8 +75,11 @@ function insertOperator(input, operator) {
 			memory += screenNumber;
 			screenNumber = '';
 			break;
-		case screenNumber == '' && memory != '':
-			memory = memory.slice(0, -1);
+		case screenNumber == '' && memory != '': //TODO: chapuza para resolver problema en la linea 251 y 267
+            if (['+', '-', '/', '*', '.'].includes(memory.charAt(screenNumber.length-1))){
+                memory = memory.slice(0, -1);
+            }
+			
 			break;
 		case screenNumber == '' && memory == '':
 			//TODO: que passa si apretem un operador sense que s'hagi entrat res.
@@ -101,6 +104,7 @@ function equals() {
 		case memory == 'NaN':
 		case memory == 'undefined':
 		case memory == 'Infinity':
+        case memory == '-Infinity':
 		case numberCount(memory) > 10:
 			screenNumber = 'ERROR';
 			display();
@@ -108,7 +112,6 @@ function equals() {
 		default:
 			display(memory);
 			screenNumber = '';
-			//memory = '';
 			break;
 	}
 }

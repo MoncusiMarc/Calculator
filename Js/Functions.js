@@ -41,8 +41,6 @@ function insertComma() {
 	display();
 }
 
-// 12 // + // +/- // =
-// escenari linia 284?? com afecta el +/-?
 function polarity() {
 	switch (true) {
 		case screenNumber == 'ERROR':
@@ -75,15 +73,10 @@ function insertOperator(input, operator) {
 			memory += screenNumber;
 			screenNumber = '';
 			break;
-		case screenNumber == '' && memory != '': //TODO: chapuza para resolver problema en la linea 251 y 267
-            if (['+', '-', '/', '*', '.'].includes(memory.charAt(screenNumber.length-1))){
-                memory = memory.slice(0, -1);
-            }
-			
+		case screenNumber == '' && memory != '': //TODO:
+                memory = memory.slice(0, -1);			
 			break;
 		case screenNumber == '' && memory == '':
-			//TODO: que passa si apretem un operador sense que s'hagi entrat res.
-			//Utilitza el 0 del display com a primer operant o no.
 			let displayed = document.getElementById('Display').innerText.replace(',', '.');
 			memory = displayed;
 			break;
@@ -91,7 +84,6 @@ function insertOperator(input, operator) {
 	memory += ' ' + operator;
 	endHighlight();
 	highlight(input);
-	//display(); //TODO: deberia aparecer el numero antiguo o el 0 del proximo.
 }
 function equals() {
 	endHighlight();
@@ -112,6 +104,7 @@ function equals() {
 		default:
 			display(memory);
 			screenNumber = '';
+            memory='';
 			break;
 	}
 }

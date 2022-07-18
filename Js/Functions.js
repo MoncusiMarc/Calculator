@@ -1,4 +1,3 @@
-
 let memory = '';
 let screenNumber = '';
 
@@ -33,7 +32,6 @@ function insertComma() {
 			break;
 		case screenNumber == '':
 			screenNumber = '0';
-		case screenNumber == '0':
 		default:
 			screenNumber += '.';
 			break;
@@ -67,7 +65,35 @@ function insertOperator(input, operator) {
 		case screenNumber == 'ERROR':
 			break;
 		case screenNumber != '' && memory != '':
-			equals();
+			memory += ' ' + screenNumber;
+    console.log('MEMORY: '+memory);
+    console.log('SCREEN: '+screenNumber);
+    memory = +(parseFloat(evaluate(memory))).toFixed(10);
+	memory = String(memory);
+
+	switch (true) {
+		case memory == 'NaN':
+		case memory == 'undefined':
+		case memory == 'Infinity':
+        case memory == '-Infinity':
+		case numberCount(memory) > 10:
+            if(memory.includes('.')){
+                do{
+                    memory = memory.slice(0, -1);
+                }while(numberCount(memory)>10);
+                display(String(+(memory)));
+                screenNumber='';
+                memory='';
+                break;
+            }
+            screenNumber = 'ERROR';
+			display();
+            break;
+		default:
+			display(memory);
+			screenNumber = '';
+			break;
+	}
 			break;
 		case screenNumber != '' && memory == '':
 			memory += screenNumber;
@@ -85,12 +111,14 @@ function insertOperator(input, operator) {
 	endHighlight();
 	highlight(input);
 }
+
 function equals() {
 	endHighlight();
 	memory += ' ' + screenNumber;
     console.log('MEMORY: '+memory);
     console.log('SCREEN: '+screenNumber);
-	memory = String(Math.evaluate(memory));
+    memory = +(parseFloat(evaluate(memory))).toFixed(10);
+	memory = String(memory);
 
 	switch (true) {
 		case memory == 'NaN':
@@ -98,9 +126,18 @@ function equals() {
 		case memory == 'Infinity':
         case memory == '-Infinity':
 		case numberCount(memory) > 10:
-			screenNumber = 'ERROR';
+            if(memory.includes('.')){
+                do{
+                    memory = memory.slice(0, -1);
+                }while(numberCount(memory)>10);
+                display(String(+(memory)));
+                screenNumber='';
+                memory='';
+                break;
+            }
+            screenNumber = 'ERROR';
 			display();
-			break;
+            break;
 		default:
 			display(memory);
 			screenNumber = '';
@@ -126,11 +163,12 @@ function endHighlight() {
 	});
 }
 
+
 function numberCount(numbers) {
 	return numbers.replace(/[^0-9]/g, '').length;
 }
 
-Math.evaluate = function (str) {
+function evaluate(str) {
 	for (var i = 0; i < str.length; i++) {
 		if (isNaN(str[i]) && !['+', '-', '/', '*', '.'].includes(str[i])) {
 			return NaN;

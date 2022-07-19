@@ -21,23 +21,23 @@
     <div id="Calculator">   
         <div id="Display">0</div>
         <div class="Keyboard">
-            <input id="n1" type="button" value="1" onclick="insert('1')">
-            <input id="n2" type="button" value="2" onclick="insert('2')">
-            <input id="n3" type="button" value="3" onclick="insert('3')">
-            <input id="n4" type="button" value="4" onclick="insert('4')">
-            <input id="n5" type="button" value="5" onclick="insert('5')">
-            <input id="n6" type="button" value="6" onclick="insert('6')">
-            <input id="n7" type="button" value="7" onclick="insert('7')">
-            <input id="n8" type="button" value="8" onclick="insert('8')">
-            <input id="n9" type="button" value="9" onclick="insert('9')">
-            <input id="n0" type="button" value="0" onclick="insert('0')">
+            <input id="n1" class="number" type="button" value="1" onclick="insert('1')">
+            <input id="n2" class="number" type="button" value="2" onclick="insert('2')">
+            <input id="n3" class="number" type="button" value="3" onclick="insert('3')">
+            <input id="n4" class="number" type="button" value="4" onclick="insert('4')">
+            <input id="n5" class="number" type="button" value="5" onclick="insert('5')">
+            <input id="n6" class="number" type="button" value="6" onclick="insert('6')">
+            <input id="n7" class="number" type="button" value="7" onclick="insert('7')">
+            <input id="n8" class="number" type="button" value="8" onclick="insert('8')">
+            <input id="n9" class="number" type="button" value="9" onclick="insert('9')">
+            <input id="n0" class="number" type="button" value="0" onclick="insert('0')">
             <input id="add" type="button" value="+" onclick="insertOperator(this,'+')">
             <input id="subs" type="button" value="-" onclick="insertOperator(this,'-')">
-            <input id="multi" type="button" value="x" onclick="insertOperator(this,'*')">
+            <input id="multi" type="button" value="*" onclick="insertOperator(this,'*')">
             <input id="div" type="button" value="/" onclick="insertOperator(this,'/')">
             <input id="equal" type="button" value="=" onclick="equals()">
             <input id="plusminus" type="button" value="+/-" onclick="polarity()">
-            <input id="comma" type="button" value="," onclick="insertComma()">
+            <input id="comma" class="number" type="button" value="," onclick="insertComma()">
             <input id="clear" type="button" value="Clear" onclick="clearing()">
         </div>
     </div>

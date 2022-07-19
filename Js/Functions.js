@@ -6,6 +6,7 @@ function clearing() {
 	memory = '';
 	screenNumber = '';
 	display();
+	disableButtons();
 }
 
 function insert(number) {
@@ -22,6 +23,7 @@ function insert(number) {
 			break;
 	}
 	display();
+	disableButtons();
 }
 
 function insertComma() {
@@ -37,6 +39,7 @@ function insertComma() {
 			break;
 	}
 	display();
+	disableButtons();
 }
 
 function polarity() {
@@ -55,45 +58,20 @@ function polarity() {
 			break;
 	}
 	display();
+	disableButtons();
 }
 
 function insertOperator(input, operator) {
-    console.log('OPERATOR');
-    console.log('MEMORY: '+memory);
-    console.log('SCREEN: '+screenNumber);
 	switch (true) {
 		case screenNumber == 'ERROR':
 			break;
 		case screenNumber != '' && memory != '':
 			memory += ' ' + screenNumber;
-    console.log('MEMORY: '+memory);
-    console.log('SCREEN: '+screenNumber);
-    memory = +(parseFloat(evaluate(memory))).toFixed(10);
-	memory = String(memory);
 
-	switch (true) {
-		case memory == 'NaN':
-		case memory == 'undefined':
-		case memory == 'Infinity':
-        case memory == '-Infinity':
-		case numberCount(memory) > 10:
-            if(memory.includes('.')){
-                do{
-                    memory = memory.slice(0, -1);
-                }while(numberCount(memory)>10);
-                display(String(+(memory)));
-                screenNumber='';
-                memory='';
-                break;
-            }
-            screenNumber = 'ERROR';
+			memory = +(parseFloat(evaluate(memory))).toFixed(10);
+			screenNumber=numberCheck(String(+(memory)));
 			display();
-            break;
-		default:
-			display(memory);
-			screenNumber = '';
-			break;
-	}
+			if(screenNumber!='ERROR'){screenNumber=''}
 			break;
 		case screenNumber != '' && memory == '':
 			memory += screenNumber;
@@ -110,40 +88,21 @@ function insertOperator(input, operator) {
 	memory += ' ' + operator;
 	endHighlight();
 	highlight(input);
+	disableButtons();
 }
 
 function equals() {
 	endHighlight();
 	memory += ' ' + screenNumber;
-    console.log('MEMORY: '+memory);
-    console.log('SCREEN: '+screenNumber);
+	console.log(memory);
     memory = +(parseFloat(evaluate(memory))).toFixed(10);
-	memory = String(memory);
-
-	switch (true) {
-		case memory == 'NaN':
-		case memory == 'undefined':
-		case memory == 'Infinity':
-        case memory == '-Infinity':
-		case numberCount(memory) > 10:
-            if(memory.includes('.')){
-                do{
-                    memory = memory.slice(0, -1);
-                }while(numberCount(memory)>10);
-                display(String(+(memory)));
-                screenNumber='';
-                memory='';
-                break;
-            }
-            screenNumber = 'ERROR';
-			display();
-            break;
-		default:
-			display(memory);
-			screenNumber = '';
-            memory='';
-			break;
-	}
+	console.log(memory);
+	screenNumber=numberCheck(String(+memory));
+	display();
+	memory='';
+	if(screenNumber!='ERROR'){screenNumber=''}
+	disableButtons();
+	
 }
 
 function display(number = screenNumber) {
@@ -152,17 +111,27 @@ function display(number = screenNumber) {
 	else display.innerText = number.replace('.', ',');
 }
 
-function highlight(input) {
-	input.classList.add('highlight');
+function numberCheck(number){
+	switch(true){
+		case number=='NaN':
+		case number=='undefined':
+		case number=='Infinity':
+		case number=='-Infinity':
+			number='ERROR';
+			break;
+		case numberCount(number)>10:
+			if(number.includes('.')){
+				do{
+					number = number.slice(0,-1);
+				}while(numberCount(number)>10 && number.includes('.'));
+			}
+			number='ERROR';
+			break;
+		default:
+			break;
+	}
+	return number;
 }
-
-function endHighlight() {
-	const buttons = document.querySelectorAll('input');
-	buttons.forEach(function (b) {
-		b.classList.remove('highlight');
-	});
-}
-
 
 function numberCount(numbers) {
 	return numbers.replace(/[^0-9]/g, '').length;
@@ -181,4 +150,76 @@ function evaluate(str) {
 		if (e.name !== 'SyntaxError') throw e;
 		return NaN;
 	}
-};
+}
+
+function highlight(input) {
+	input.classList.add('highlight');
+}
+
+function endHighlight() {
+	const buttons = document.querySelectorAll('input');
+	buttons.forEach((b) =>{
+		b.classList.remove('highlight');
+	});
+}
+
+function unableButtons(list){
+	list.forEach((b) => {
+		b.classList.remove('disable');
+	});
+}
+
+function disableButtons(){
+	const list = document.querySelectorAll("input");
+	unableButtons(list);
+	switch(true){
+		case (numberCount(screenNumber)>=10):
+			list.forEach((b) =>{
+				if(b.classList.contains('number')){
+					b.classList.add('disable');
+				}
+			});
+			break;
+		case (screenNumber.includes('.')):
+			document.getElementById('comma').classList.add('disable');
+			break;
+		case (screenNumber=='ERROR'):
+			list.forEach((b) =>{
+				b.classList.add('disable');
+			});
+			document.getElementById('clear').classList.remove('disable');
+		break;
+	}
+}
+
+
+document.addEventListener('keydown', (event) => {
+	var name = event.key;
+	var code = event.code;
+	switch(true){
+		case ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'].includes(name):
+			insert(name);
+			break;
+		case ['+', '-', '/', '*'].includes(name):
+			document.querySelectorAll('input').forEach((i) =>{
+				if(i.value==name){input=i;}
+			});
+			insertOperator(input,name);
+			break;
+		case [','].includes(name):
+		case code == 'NumpadDecimal':
+			insertComma();
+			break;
+		case ['Enter'].includes(name):
+			equals();
+			break;
+		case ['Escape'].includes(name):
+			clearing();
+			break;
+		case ['Control'].includes(name):
+			polarity();
+			break;
+		default:
+			break;
+	}
+  }, false);

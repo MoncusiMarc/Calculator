@@ -99,6 +99,12 @@ html{
     background-color: var(--clr-darkgreen);
     color: var(--clr-lightestgreen);
 }
+#Calculator input[type=button].disable{
+    background-color: var(--clr-darkgreen);
+    color: var(--clr-lightestgreen);
+    pointer-events: none;
+}
+
 
 #n1{grid-area: n1;}
 #n2{grid-area: n2;}

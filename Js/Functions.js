@@ -45,9 +45,19 @@ function insertComma() {
 function polarity() {
     switch (true) {
         case screenNumber == 'ERROR':
-        case screenNumber == '':
         case screenNumber == '0':
         case screenNumber == '0.':
+            break;
+        case screenNumber == '':
+            if(["+","-","*","/"].some(operator => memory.includes(operator))){
+
+            }else{
+                memory = document
+                    .getElementById('Display')
+                    .innerText.replace(',', '.');
+                memory = String(-memory);
+            }
+            
             break;
         case screenNumber.charAt(screenNumber.length - 1) == '.':
             screenNumber = String(-screenNumber);
@@ -83,10 +93,9 @@ function insertOperator(input, operator) {
             memory = memory.slice(0, -1);
             break;
         case screenNumber == '' && memory == '':
-            let displayed = document
+            memory = document
                 .getElementById('Display')
                 .innerText.replace(',', '.');
-            memory = displayed;
             break;
     }
     memory += ' ' + operator;
@@ -98,9 +107,7 @@ function insertOperator(input, operator) {
 function equals() {
     endHighlight();
     memory += ' ' + screenNumber;
-    console.log(memory);
     memory = +parseFloat(evaluate(memory)).toFixed(10);
-    console.log(memory);
     screenNumber = numberCheck(String(+memory));
     display();
     memory = '';
@@ -195,7 +202,7 @@ function disableButtons() {
             });
             document.getElementById('clear').classList.remove('disable');
             break;
-        case ['', '0', '0,'].includes(screenNumber):
+        case ['0', '0,'].includes(screenNumber):
             document.getElementById('plusminus').classList.add('disable');
             break;
     }

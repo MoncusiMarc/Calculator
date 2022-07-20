@@ -112,7 +112,7 @@ function equals() {
 
 function display(number = screenNumber) {
     const display = document.getElementById('Display');
-    if (number == '') display.innerText = 0;
+    if (number == '') display.innerText = '0';
     else display.innerText = number.replace('.', ',');
 }
 
@@ -195,6 +195,9 @@ function disableButtons() {
             });
             document.getElementById('clear').classList.remove('disable');
             break;
+        case ['', '0', '0,'].includes(screenNumber):
+            document.getElementById('plusminus').classList.add('disable');
+            break;
     }
 }
 
@@ -205,9 +208,7 @@ document.addEventListener(
         var name = event.key;
         var code = event.code;
         switch (true) {
-            case ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'].includes(
-                name
-            ):
+            case ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'].includes(name):
                 insert(name);
                 break;
             case ['+', '-', '/', '*'].includes(name):

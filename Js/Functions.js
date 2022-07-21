@@ -1,150 +1,121 @@
-let memory = '';
-let screenNumber = '';
+let memory = new Array(3).fill('');
 
-function clearing() {
+function clearing(){
     endHighlight();
-    memory = '';
-    screenNumber = '';
+    memory.fill('');
     display();
-    disableButtons();
+    checkingButtons();
 }
 
 function insert(number) {
-    switch (true) {
-        case numberCount(screenNumber) >= 10:
-        case screenNumber == 'ERROR':
+    switch (true){
+        case numberCount(memory[2]) >= 10:
+        case memory[2] == 'ERROR':
             break;
-        case ['', '0'].includes(screenNumber):
-            screenNumber = number;
+        case ['', '0'].includes(memory[2]):
+            memory[2] = number;
             break;
         default:
-            screenNumber += number;
+            memory[2] += number;
             break;
     }
     display();
-    disableButtons();
+    checkingButtons();
 }
 
-function insertComma() {
-    switch (true) {
-        case screenNumber.includes('.'):
-        case numberCount(screenNumber) >= 10:
-        case screenNumber == 'ERROR':
+function insertComma(){
+    switch(true){
+        case memory[2].includes('.'):
+        case numberCount(memory[2])>=10:
+        case memory[2]=='ERROR':
             break;
-        case screenNumber == '':
-            screenNumber = '0';
+        case memory[2]== '':
+            memory[2] = '0';
         default:
-            screenNumber += '.';
+            memory[2] += '.';
             break;
     }
     display();
-    disableButtons();
+    checkingButtons();
 }
 
 function polarity() {
-    switch (true) {
-        case ['ERROR', '0', '0.'].includes(screenNumber):
+    switch (true){
+        case ['ERROR', '0', '0.'].includes(memory[2]):
             break;
-        case screenNumber == '':
-            if(["+","-","*","/"].some(operator => memory.includes(operator))){
-                let tmp = memory.split(" ");
-                tmp[0] = String(-tmp[0]);
-                memory = tmp.join(' ');
-            }else{
-                memory = document
-                    .getElementById('Display')
-                    .innerText.replace(',', '.');
-                memory = String(-memory);
-            }
-            display(memory.split(' ')[0]);
+        case memory[2] == '':
+            memory[0] = String(-memory[0]);
             break;
-        case screenNumber.charAt(screenNumber.length - 1) == '.':
-            screenNumber = String(-screenNumber);
-            screenNumber += '.';
-            display();
+        case memory[2].charAt(memory[2].length -1) == '.':
+            memory[2] = String(-memory[2]) + '.';
+        default:
+            memory[2] = String(-memory[2]);
+    }
+    display();
+    checkingButtons();
+}
+
+function insertOperator(input,operator){
+    switch(true){
+        case memory[2] == 'ERROR':
+            break;
+        case memory[0] == '' && memory[2] == '':
+            memory[0] = document.getElementById('Display').innerText(',','.');
+            break;
+        case memory[0] == '' && memory[2] != '':
+            memory[0] = memory[2];
+            memory[2] = '';
+            break;
+        case memory[0] != '' && memory[2] == '':
+            break;
+        case memory[0] != '' && memory[2] != '':
+            memory[0] = +parseFloat(evaluate(memory.join(' '))).toFixed(10);
+            memory[0] = toDecimal(memory[0]);
+            memory[2] = numberCheck(memory[0]);
             break;
         default:
-            screenNumber = String(-screenNumber);
-            display();
-            break;
+            memory[2] = 'ERROR';
     }
-    disableButtons();
-}
-
-function insertOperator(input, operator) {
-    switch (true) {
-        case screenNumber == 'ERROR':
-            break;
-        case screenNumber != '' && memory != '':
-            memory += ' ' + screenNumber;
-            memory = +parseFloat(evaluate(memory)).toFixed(10);
-            memory = toDecimal(memory);
-            screenNumber = numberCheck(memory);
-            display();
-            if (screenNumber != 'ERROR') {
-                screenNumber = '';
-            }
-            break;
-        case screenNumber != '' && memory == '':
-            memory += screenNumber;
-            screenNumber = '';
-            break;
-        case screenNumber == '' && memory != '':
-            memory = memory.slice(0, -1);
-            break;
-        case screenNumber == '' && memory == '':
-            memory = document
-                .getElementById('Display')
-                .innerText.replace(',', '.');
-            break;
-    }
-    memory += ' ' + operator;
+    memory[1] = operator;
     endHighlight();
     highlight(input);
-    disableButtons();
+    checkingButtons();
 }
 
-function equals() {
-    endHighlight();
-    memory += ' ' + screenNumber;
-    memory = +parseFloat(evaluate(memory)).toFixed(10);
-    memory = toDecimal(memory);
-    screenNumber = numberCheck(String(memory));
+function equals()  {
+    memory[0] = +parseFloat(evaluate(memory.join(' '))).toFixed(10);
+    memory[0] = toDecimal(memory[0]);
+    memory[2] = numberCheck(memory[0]);
     display();
-    memory = '';
-    if (screenNumber != 'ERROR') {
-        screenNumber = '';
-    }
-    disableButtons();
+    memory[0] = ''; //HOW TO REDUCE FROM 87 TO 91, MAYBE FILL('')
+    memory[1] = '';
+    if(memory[2]!='ERROR'){
+        memory[2]= '';
+    } 
+    endHighlight();
+    checkingButtons();
 }
 
-function display(number = screenNumber) {
+
+function display(number = memory[2]){
     const display = document.getElementById('Display');
     if (number == '') display.innerText = '0';
-    else display.innerText = number.replace('.', ',');
+    else display.innerText = number.replace('.',',');
 }
 
-function numberCheck(number) {
+function numberCheck(number){
     switch (true) {
-        case number == 'NaN':
-        case number == 'undefined':
-        case number == 'Infinity':
-        case number == '-Infinity':
+        case ['NaN', 'undefined', 'Infinity', '-Infinity'].includes(number):
             number = 'ERROR';
             break;
-        case numberCount(number) > 10: //TODO
-            if (number.includes('.')) {
-                do {
+        case numberCount(number) > 10:
+            if(number.includes('.')){
+                do{
                     number = number.slice(0, -1);
-                } while (numberCount(number) > 10 && number.includes('.'));
+                }while(numberCount(number)>10 && number.includes('.'));
                 if(numberCount(number)> 10) number = 'ERROR';
                 if(number.includes('.')) number = number.slice(0,-1);
-                break;
             }
-            number = 'ERROR';
-            break;
-        case numberCount(number)<0:
-            number='ERROR';
             break;
         default:
             break;
@@ -152,11 +123,29 @@ function numberCheck(number) {
     return String(number);
 }
 
-function numberCount(numbers) {
-    return numbers.replace(/[^0-9]/g, '').length;
+function numberCount(number){
+    return number.replace(/[^0-9]/g, '').length;
 }
 
-function evaluate(str) {
+function numberToDecimal(number){
+    if (Math.abs(number) <1.0){
+        var e = parseInt(number.toString().split('e-')[1]);
+        if(e){
+            number *= Math.pow(10,e-1);
+            number = '0.' + (new Array(e)).join('0') + number.toString().substring(2);
+        }
+    } else {
+        var e = parseInt(number.toString().split('+')[1]);
+        if(e > 20){
+            e -= 20;
+            number /= Math.pow(10,e);
+            number += (new Array(e+1)).join('0');
+        }
+    }
+    return number;
+}
+
+function evaluate(str){
     for (var i = 0; i < str.length; i++) {
         if (isNaN(str[i]) && !['+', '-', '/', '*', '.'].includes(str[i])) {
             return NaN;
@@ -171,25 +160,7 @@ function evaluate(str) {
     }
 }
 
-function toDecimal(x) {
-    if (Math.abs(x) < 1.0) {
-      var e = parseInt(x.toString().split('e-')[1]);
-      if (e) {
-          x *= Math.pow(10,e-1);
-          x = '0.' + (new Array(e)).join('0') + x.toString().substring(2);
-      }
-    } else {
-      var e = parseInt(x.toString().split('+')[1]);
-      if (e > 20) {
-          e -= 20;
-          x /= Math.pow(10,e);
-          x += (new Array(e+1)).join('0');
-      }
-    }
-    return x;
-  }
-
-function highlight(input) {
+function highlight(input){
     input.classList.add('highlight');
 }
 
@@ -200,34 +171,31 @@ function endHighlight() {
     });
 }
 
-function unableButtons(list) {
-    list.forEach((b) => {
+function unableButtons(list){
+    list.forEach((b) =>{
         b.classList.remove('disable');
     });
 }
-
-function disableButtons() {
+function checkingButtons(){
     const list = document.querySelectorAll('input');
     unableButtons(list);
     switch (true) {
-        case numberCount(screenNumber) >= 10:
+        case numberCount(memory[2]) >= 10:
             list.forEach((b) => {
-                if (b.classList.contains('number')) {
-                    b.classList.add('disable');
-                }
+                if(b.classList.contains('number')) b.classList.add('disable');
             });
             break;
-        case screenNumber.includes('.'):
+        case memory[2].includes('.'):
             document.getElementById('comma').classList.add('disable');
             break;
-        case screenNumber == 'ERROR':
-            list.forEach((b) => {
+        case memory[2] == 'ERROR':
+            list.forEach((b) =>{
                 b.classList.add('disable');
-            });
+            })
             document.getElementById('clear').classList.remove('disable');
             break;
-        case ['0', '0,'].includes(screenNumber):
-        case [''].includes(memory):
+        case ['0', '0.'].includes(memory[2]):
+        case [''].includes(memory[2]):
             document.getElementById('plusminus').classList.add('disable');
             break;
     }
@@ -272,6 +240,6 @@ document.addEventListener(
 );
 
 window.onload = function(){
-    disableButtons();
+    checkingButtons();
     document.getElementById('n0').classList.add('disable');
 }

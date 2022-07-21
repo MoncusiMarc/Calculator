@@ -140,6 +140,9 @@ function numberCheck(number) {
             }
             number = 'ERROR';
             break;
+        case numberCount(number)<0:
+            number='ERROR';
+            break;
         default:
             break;
     }

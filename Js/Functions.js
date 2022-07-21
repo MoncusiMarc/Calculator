@@ -273,4 +273,5 @@ document.addEventListener(
 
 window.onload = function(){
     disableButtons();
+    document.getElementById('n0').classList.add('disable');
 }

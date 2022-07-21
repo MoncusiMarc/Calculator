@@ -14,8 +14,7 @@ function insert(number) {
         case numberCount(screenNumber) >= 10:
         case screenNumber == 'ERROR':
             break;
-        case screenNumber == '':
-        case screenNumber == '0':
+        case ['', '0'].includes(screenNumber):
             screenNumber = number;
             break;
         default:
@@ -44,30 +43,31 @@ function insertComma() {
 
 function polarity() {
     switch (true) {
-        case screenNumber == 'ERROR':
-        case screenNumber == '0':
-        case screenNumber == '0.':
+        case ['ERROR', '0', '0.'].includes(screenNumber):
             break;
         case screenNumber == '':
             if(["+","-","*","/"].some(operator => memory.includes(operator))){
-
+                let tmp = memory.split(" ");
+                tmp[0] = String(-tmp[0]);
+                memory = tmp.join(' ');
             }else{
                 memory = document
                     .getElementById('Display')
                     .innerText.replace(',', '.');
                 memory = String(-memory);
             }
-            
+            display(memory.split(' ')[0]);
             break;
         case screenNumber.charAt(screenNumber.length - 1) == '.':
             screenNumber = String(-screenNumber);
             screenNumber += '.';
+            display();
             break;
         default:
             screenNumber = String(-screenNumber);
+            display();
             break;
     }
-    display();
     disableButtons();
 }
 
@@ -77,9 +77,9 @@ function insertOperator(input, operator) {
             break;
         case screenNumber != '' && memory != '':
             memory += ' ' + screenNumber;
-
             memory = +parseFloat(evaluate(memory)).toFixed(10);
-            screenNumber = numberCheck(String(+memory));
+            memory = toDecimal(memory);
+            screenNumber = numberCheck(memory);
             display();
             if (screenNumber != 'ERROR') {
                 screenNumber = '';
@@ -89,7 +89,7 @@ function insertOperator(input, operator) {
             memory += screenNumber;
             screenNumber = '';
             break;
-        case screenNumber == '' && memory != '': //TODO:
+        case screenNumber == '' && memory != '':
             memory = memory.slice(0, -1);
             break;
         case screenNumber == '' && memory == '':
@@ -108,7 +108,8 @@ function equals() {
     endHighlight();
     memory += ' ' + screenNumber;
     memory = +parseFloat(evaluate(memory)).toFixed(10);
-    screenNumber = numberCheck(String(+memory));
+    memory = toDecimal(memory);
+    screenNumber = numberCheck(String(memory));
     display();
     memory = '';
     if (screenNumber != 'ERROR') {
@@ -131,11 +132,13 @@ function numberCheck(number) {
         case number == '-Infinity':
             number = 'ERROR';
             break;
-        case numberCount(number) > 10:
+        case numberCount(number) > 10: //TODO
             if (number.includes('.')) {
                 do {
                     number = number.slice(0, -1);
                 } while (numberCount(number) > 10 && number.includes('.'));
+                if(numberCount(number)> 10) number = 'ERROR';
+                if(number.includes('.')) number = number.slice(0,-1);
                 break;
             }
             number = 'ERROR';
@@ -146,7 +149,7 @@ function numberCheck(number) {
         default:
             break;
     }
-    return number;
+    return String(number);
 }
 
 function numberCount(numbers) {
@@ -167,6 +170,24 @@ function evaluate(str) {
         return NaN;
     }
 }
+
+function toDecimal(x) {
+    if (Math.abs(x) < 1.0) {
+      var e = parseInt(x.toString().split('e-')[1]);
+      if (e) {
+          x *= Math.pow(10,e-1);
+          x = '0.' + (new Array(e)).join('0') + x.toString().substring(2);
+      }
+    } else {
+      var e = parseInt(x.toString().split('+')[1]);
+      if (e > 20) {
+          e -= 20;
+          x /= Math.pow(10,e);
+          x += (new Array(e+1)).join('0');
+      }
+    }
+    return x;
+  }
 
 function highlight(input) {
     input.classList.add('highlight');
@@ -206,6 +227,7 @@ function disableButtons() {
             document.getElementById('clear').classList.remove('disable');
             break;
         case ['0', '0,'].includes(screenNumber):
+        case [''].includes(memory):
             document.getElementById('plusminus').classList.add('disable');
             break;
     }
@@ -248,3 +270,7 @@ document.addEventListener(
     },
     false
 );
+
+window.onload = function(){
+    disableButtons();
+}

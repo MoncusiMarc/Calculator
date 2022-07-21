@@ -5,6 +5,7 @@ function clearing(){
     memory.fill('');
     display();
     checkingButtons();
+    document.getElementById('n0').classList.add('disable');
 }
 
 function insert(number) {
@@ -44,10 +45,11 @@ function polarity() {
         case ['ERROR', '0', '0.'].includes(memory[2]):
             break;
         case memory[2] == '':
-            memory[0] = String(-memory[0]);
+                memory[2] = String(-document.getElementById('Display').innerText.replace(',', '.'));
             break;
         case memory[2].charAt(memory[2].length -1) == '.':
             memory[2] = String(-memory[2]) + '.';
+            break;
         default:
             memory[2] = String(-memory[2]);
     }
@@ -60,7 +62,7 @@ function insertOperator(input,operator){
         case memory[2] == 'ERROR':
             break;
         case memory[0] == '' && memory[2] == '':
-            memory[0] = document.getElementById('Display').innerText(',','.');
+            memory[0] = document.getElementById('Display').innerText.replace(',', '.');
             break;
         case memory[0] == '' && memory[2] != '':
             memory[0] = memory[2];
@@ -70,8 +72,12 @@ function insertOperator(input,operator){
             break;
         case memory[0] != '' && memory[2] != '':
             memory[0] = +parseFloat(evaluate(memory.join(' '))).toFixed(10);
-            memory[0] = toDecimal(memory[0]);
-            memory[2] = numberCheck(memory[0]);
+            memory[0] = numberToDecimal(memory[0]);
+            memory[2] = numberCheck(String(memory[0]));
+            display();
+            if(memory[2]!='ERROR'){
+                memory[2]= '';
+            }
             break;
         default:
             memory[2] = 'ERROR';
@@ -84,8 +90,8 @@ function insertOperator(input,operator){
 
 function equals()  {
     memory[0] = +parseFloat(evaluate(memory.join(' '))).toFixed(10);
-    memory[0] = toDecimal(memory[0]);
-    memory[2] = numberCheck(memory[0]);
+    memory[0] = numberToDecimal(memory[0]);
+    memory[2] = numberCheck(String(memory[0]));
     display();
     memory[0] = ''; //HOW TO REDUCE FROM 87 TO 91, MAYBE FILL('')
     memory[1] = '';
@@ -115,7 +121,9 @@ function numberCheck(number){
                 }while(numberCount(number)>10 && number.includes('.'));
                 if(numberCount(number)> 10) number = 'ERROR';
                 if(number.includes('.')) number = number.slice(0,-1);
+                break;
             }
+            number='ERROR';
             break;
         default:
             break;
@@ -179,26 +187,25 @@ function unableButtons(list){
 function checkingButtons(){
     const list = document.querySelectorAll('input');
     unableButtons(list);
-    switch (true) {
-        case numberCount(memory[2]) >= 10:
-            list.forEach((b) => {
-                if(b.classList.contains('number')) b.classList.add('disable');
-            });
-            break;
-        case memory[2].includes('.'):
-            document.getElementById('comma').classList.add('disable');
-            break;
-        case memory[2] == 'ERROR':
-            list.forEach((b) =>{
-                b.classList.add('disable');
-            })
-            document.getElementById('clear').classList.remove('disable');
-            break;
-        case ['0', '0.'].includes(memory[2]):
-        case [''].includes(memory[2]):
-            document.getElementById('plusminus').classList.add('disable');
-            break;
+    if(numberCount(memory[2])>=10){
+        list.forEach((b) => {
+        if(b.classList.contains('number')) b.classList.add('disable');
+        });
     }
+    if(memory[2].includes('.')){
+        document.getElementById('comma').classList.add('disable');
+    }
+    if(memory[2] == 'ERROR'){
+        list.forEach((b) =>{
+            b.classList.add('disable');
+        })
+        document.getElementById('clear').classList.remove('disable');
+    }
+    if(['0', '0.'].includes(memory[2]) || [''].includes(memory[0])){
+        document.getElementById('plusminus').classList.add('disable');
+        document.getElementById('n0').classList.add('disable');
+    }
+    
 }
 
 document.addEventListener(

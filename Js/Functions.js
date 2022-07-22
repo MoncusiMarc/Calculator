@@ -42,13 +42,15 @@ function insertComma(){
 
 function polarity() {
     switch (true){
-        case ['ERROR', '0', '0.'].includes(memory[2]):
-            break;
-        case memory[2] == '':
+
+        case memory[2] == '' && memory[1]=='':
                 memory[2] = String(-document.getElementById('Display').innerText.replace(',', '.'));
             break;
         case memory[2].charAt(memory[2].length -1) == '.':
             memory[2] = String(-memory[2]) + '.';
+            break;
+        case ['ERROR', ''].includes(memory[2]):
+        case +(memory[2])==0:
             break;
         default:
             memory[2] = String(-memory[2]);
@@ -201,9 +203,8 @@ function checkingButtons(){
         })
         document.getElementById('clear').classList.remove('disable');
     }
-    if(['0', '0.'].includes(memory[2]) || [''].includes(memory[0])){
+    if(+(memory[2])==0){
         document.getElementById('plusminus').classList.add('disable');
-        document.getElementById('n0').classList.add('disable');
     }
     
 }

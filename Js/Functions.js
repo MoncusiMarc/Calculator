@@ -120,6 +120,7 @@ function insertOperator(button, operator){
 
 function calculate(){
     screenNumber = evaluate();
+    console.log(screenNumber);
     setDisplay(screenNumber);
     savedNumber = savedSign = '';
     if(screenNumber != 'ERROR') screenNumber ='';
@@ -175,7 +176,34 @@ function exponentialNumberToDecimal(){
 }
 
 function evaluate(){
-    
+    let firstNumber = parseFloat(savedNumber).toFixed(10);
+    let secondNumber = parseFloat(screenNumber).toFixed(10);
+    let result = 0.0;
+    if(!isNaN(firstNumber) && !isNaN(secondNumber)){
+        switch(savedSign){
+            case '+':
+                result = firstNumber + secondNumber;
+                break;
+            case '-':
+                result = firstNumber - secondNumber;
+                break;
+            case '*':
+                result = firstNumber * secondNumber;
+                break;
+            case '/':
+                result = firstNumber / secondNumber;
+                break;
+            default:
+                result = 'NaN';
+                break;
+        }
+    }
+    console.log(result);
+    if(result.includes('e')) result = exponentialNumberToDecimal(result);
+    console.log(result);
+    result = Number(result);
+    console.log(result);
+    return isNumberWellFormed(result);
 }
 
 document.addEventListener(

@@ -1,44 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Calculator</title>
-    <link rel="icon" type="image/png" href="Images/0.png">
-
-    <meta http-equiv="X-UA-Compatible" content="IE-edge">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Calculator">
-    <meta name="keywords" content="HTML,CSS,JS">
-    <meta name="author" content="Marc Moncusí">
-
-    <link rel="stylesheet" href="Css/Style.css">
-    <script src="Js/Functions.js"></script>
-</head>
-<body>
-    <header>
-        <img id="HeaderImage" src="Images/calculator.png" alt="Calculator">
-    </header>
-    <div id="Calculator">
-        <div id="Display">0</div>
-        <div class="Keyboard">
-            <input id="n1" class="number" type="button" value="1" onclick="insertNumber('1')">
-            <input id="n2" class="number" type="button" value="2" onclick="insertNumber('2')">
-            <input id="n3" class="number" type="button" value="3" onclick="insertNumber('3')">
-            <input id="n4" class="number" type="button" value="4" onclick="insertNumber('4')">
-            <input id="n5" class="number" type="button" value="5" onclick="insertNumber('5')">
-            <input id="n6" class="number" type="button" value="6" onclick="insertNumber('6')">
-            <input id="n7" class="number" type="button" value="7" onclick="insertNumber('7')">
-            <input id="n8" class="number" type="button" value="8" onclick="insertNumber('8')">
-            <input id="n9" class="number" type="button" value="9" onclick="insertNumber('9')">
-            <input id="n0" class="number" type="button" value="0" onclick="insertNumber('0')">
-            <input id="add" type="button" value="+" onclick="insertOperator(this,'+')">
-            <input id="subs" type="button" value="-" onclick="insertOperator(this,'-')">
-            <input id="multi" type="button" value="*" onclick="insertOperator(this,'*')">
-            <input id="div" type="button" value="/" onclick="insertOperator(this,'/')">
-            <input id="equal" type="button" value="=" onclick="calculate()">
-            <input id="plusminus" type="button" value="+/-" onclick="insertNegation()">
-            <input id="comma" class="number" type="button" value="," onclick="insertComma()">
-            <input id="clear" type="button" value="Clear" onclick="clearing()">
-        </div>
-    </div>
-</body>
+	<head>
+		<title>Calculator</title>
+		<link rel="icon" type="image/png" href="Images/0.png" />
+		<meta http-equiv="X-UA-Compatible" content="IE-edge" />
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Calculator" />
+		<meta name="keywords" content="HTML,CSS,JS" />
+		<meta name="author" content="Marc Moncusí" />
+		<link rel="stylesheet" href="Css/Style.css" />
+		<script src="Js/Functions.js"></script>
+	</head>
+	<body>
+		<header>
+			<img id="HeaderImage" src="Images/calculator.png" alt="Calculator" />
+		</header>
+		<div id="Calculator">
+			<div id="Display">0</div>
+			<div class="Keyboard">
+				<input id="n1" class="number" type="button" value="1" onclick="insertNumber('1')" />
+				<input id="n2" class="number" type="button" value="2" onclick="insertNumber('2')" />
+				<input id="n3" class="number" type="button" value="3" onclick="insertNumber('3')" />
+				<input id="n4" class="number" type="button" value="4" onclick="insertNumber('4')" />
+				<input id="n5" class="number" type="button" value="5" onclick="insertNumber('5')" />
+				<input id="n6" class="number" type="button" value="6" onclick="insertNumber('6')" />
+				<input id="n7" class="number" type="button" value="7" onclick="insertNumber('7')" />
+				<input id="n8" class="number" type="button" value="8" onclick="insertNumber('8')" />
+				<input id="n9" class="number" type="button" value="9" onclick="insertNumber('9')" />
+				<input id="n0" class="number" type="button" value="0" onclick="insertNumber('0')" />
+				<input id="add" type="button" value="+" onclick="insertOperator(this,'+')" />
+				<input id="subs" type="button" value="-" onclick="insertOperator(this,'-')" />
+				<input id="multi" type="button" value="*" onclick="insertOperator(this,'*')" />
+				<input id="div" type="button" value="/" onclick="insertOperator(this,'/')" />
+				<input id="equal" type="button" value="=" onclick="calculate()" />
+				<input id="plusminus" type="button" value="+/-" onclick="insertNegation()" />
+				<input id="comma" class="number" type="button" value="," onclick="insertComma()" />
+				<input id="clear" type="button" value="Clear" onclick="clearing()" />
+			</div>
+		</div>
+	</body>
+</html>

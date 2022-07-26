@@ -95,7 +95,7 @@ function equals()  {
     memory[0] = numberToDecimal(memory[0]);
     memory[2] = numberCheck(String(memory[0]));
     display();
-    memory[0] = ''; //HOW TO REDUCE FROM 87 TO 91, MAYBE FILL('')
+    memory[0] = '';
     memory[1] = '';
     if(memory[2]!='ERROR'){
         memory[2]= '';

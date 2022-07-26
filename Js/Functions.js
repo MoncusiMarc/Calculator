@@ -13,9 +13,9 @@ function getDisplay(){
 }
 
 function setDisplay(number){
-    const display = document.getElementById('Display').innerText;
-    if(number = '') display = '0';
-    else display = number.replace('.',',');
+    const display = document.getElementById('Display');
+    if(number == '') display.innerText = '0';
+    else display.innerText = number.replace('.',',');
 }
 
 function getButtons(){
@@ -32,7 +32,7 @@ function setButtonHighlight(button,highlight){
 }
 
 function setAllButtonsHighlight(state){
-    getButtons.forEach((button)=>{
+    getButtons().forEach((button)=>{
         setButtonHighlight(button,state);
     })
 }
@@ -75,16 +75,18 @@ function insertNumber(number){
 
 function insertComma(){
     if(digitCount(screenNumber)<digitsOnScreen && screenNumber != 'ERROR' && !screenNumber.includes('.')){
-        if(screenNumber == '') screenNumber = 0;
+        if(screenNumber == '')  screenNumber = 0;        
         screenNumber += '.';
     }
+    setDisplay(screenNumber);
+    setButtonsStatus(screenNumber,false);
 }
 
 function insertNegation(){
     if(screenNumber != 'ERROR' && Number(screenNumber) !='0'){
         if(screenNumber == '' && savedNumber == ''){
             screenNumber = String(-getDisplay());
-        }else if(screenNumber.charAt(screenNumber.length -1) !='.'){
+        }else if(screenNumber.charAt(screenNumber.length -1) =='.'){
             screenNumber = String(-screenNumber) + '.';
         }else{
             screenNumber = String(-screenNumber);
@@ -105,8 +107,10 @@ function insertOperator(button, operator){
             }else{
                 screenNumber = evaluate();
                 setDisplay(screenNumber);
-                savedNumber = savedSign = '';
-                if(screenNumber != 'ERROR') screenNumber ='';
+                if(screenNumber != 'ERROR'){
+                    savedNumber = screenNumber;
+                    screenNumber ='';
+                }
             }
         }else{
             screenNumber = 'ERROR';
@@ -120,7 +124,6 @@ function insertOperator(button, operator){
 
 function calculate(){
     screenNumber = evaluate();
-    console.log(screenNumber);
     setDisplay(screenNumber);
     savedNumber = savedSign = '';
     if(screenNumber != 'ERROR') screenNumber ='';
@@ -141,11 +144,11 @@ function isNumberWellFormed(number){
         number = 'ERROR';
     }else if(digitCount(number)> digitsOnScreen){
         if(number.includes('.')){
-            do{
-                number.number.slice(0,-1);
-            }while(digitCount(number)>digitsOnScreen && number.includes('.'));
-            if(number.includes('.')) number = number.slice(0,-1);
-            if(digitCount(number)> digitsOnScreen) number= 'ERROR';
+            while(digitCount(number)>digitsOnScreen && number.includes('.')){
+                number = number.slice(0,-1);
+            }
+            if(screenNumber.charAt(screenNumber.length -1) =='.') number = number.slice(0,-1);
+            if(digitCount(number)>digitsOnScreen) number = 'ERROR';
         }else{
             number='ERROR';
         }
@@ -157,7 +160,7 @@ function digitCount(number){
     return number.replace(/[^0-9]/g, '').length;
 }
 
-function exponentialNumberToDecimal(){
+function exponentialNumberToDecimal(number){
     if (Math.abs(number) <1.0){
         var e = parseInt(number.toString().split('e-')[1]);
         if(e){
@@ -176,10 +179,10 @@ function exponentialNumberToDecimal(){
 }
 
 function evaluate(){
-    let firstNumber = parseFloat(savedNumber).toFixed(10);
-    let secondNumber = parseFloat(screenNumber).toFixed(10);
+    let firstNumber = parseFloat(savedNumber);
+    let secondNumber = parseFloat(screenNumber);
     let result = 0.0;
-    if(!isNaN(firstNumber) && !isNaN(secondNumber)){
+    if(!isNaN(firstNumber) || !isNaN(secondNumber)){
         switch(savedSign){
             case '+':
                 result = firstNumber + secondNumber;
@@ -194,16 +197,20 @@ function evaluate(){
                 result = firstNumber / secondNumber;
                 break;
             default:
-                result = 'NaN';
+                result = secondNumber;
                 break;
         }
     }
-    console.log(result);
-    if(result.includes('e')) result = exponentialNumberToDecimal(result);
-    console.log(result);
-    result = Number(result);
-    console.log(result);
-    return isNumberWellFormed(result);
+    if(String(result).includes('e')){
+        result = exponentialNumberToDecimal(result);
+        result = isNumberWellFormed(String(result));
+        if(result.charAt(result.length -1) ==0 && result.includes('.')){
+            result = Number(result);
+        }
+        return result;
+    }
+    result = Number(parseFloat(result).toFixed(10));
+    return isNumberWellFormed(String(result));
 }
 
 document.addEventListener(
@@ -218,7 +225,7 @@ document.addEventListener(
                 insertNumber(name);
                 break;
             case '+': case '-': case '/': case '*':
-                getButtons.forEach((i) => {
+                getButtons().forEach((i) => {
                     if(i.value == name){
                         input = i;
                     }

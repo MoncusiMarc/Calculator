@@ -251,3 +251,4 @@ window.onload = function(){
     checkingButtons();
     document.getElementById('n0').classList.add('disable');
 }
+hey

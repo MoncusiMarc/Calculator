@@ -11,32 +11,33 @@
 		<meta name="author" content="Marc Moncusí" />
 		<link rel="stylesheet" href="Css/Style.css" />
 		<script src="Js/Functions.js"></script>
+		<script src="Js/Calculator.js"></script>
 	</head>
 	<body>
 		<header>
 			<img id="HeaderImage" src="Images/calculator.png" alt="Calculator" />
 		</header>
 		<div id="Calculator">
-			<div id="Display">0</div>
+			<div data-display id="Display">0</div>
 			<div class="Keyboard">
-				<input id="n1" class="number" type="button" value="1" onclick="insertNumber('1')" />
-				<input id="n2" class="number" type="button" value="2" onclick="insertNumber('2')" />
-				<input id="n3" class="number" type="button" value="3" onclick="insertNumber('3')" />
-				<input id="n4" class="number" type="button" value="4" onclick="insertNumber('4')" />
-				<input id="n5" class="number" type="button" value="5" onclick="insertNumber('5')" />
-				<input id="n6" class="number" type="button" value="6" onclick="insertNumber('6')" />
-				<input id="n7" class="number" type="button" value="7" onclick="insertNumber('7')" />
-				<input id="n8" class="number" type="button" value="8" onclick="insertNumber('8')" />
-				<input id="n9" class="number" type="button" value="9" onclick="insertNumber('9')" />
-				<input id="n0" class="number" type="button" value="0" onclick="insertNumber('0')" />
-				<input id="add" type="button" value="+" onclick="insertOperator(this,'+')" />
-				<input id="subs" type="button" value="-" onclick="insertOperator(this,'-')" />
-				<input id="multi" type="button" value="*" onclick="insertOperator(this,'*')" />
-				<input id="div" type="button" value="/" onclick="insertOperator(this,'/')" />
-				<input id="equal" type="button" value="=" onclick="calculate()" />
-				<input id="plusminus" type="button" value="+/-" onclick="insertNegation()" />
-				<input id="comma" class="number" type="button" value="," onclick="insertComma()" />
-				<input id="clear" type="button" value="Clear" onclick="clearing()" />
+				<button data-number id="n1">1</button>
+				<button data-number id="n2">2</button>
+				<button data-number id="n3">3</button>
+				<button data-number id="n4">4</button>
+				<button data-number id="n5">5</button>
+				<button data-number id="n6">6</button>
+				<button data-number id="n7">7</button>
+				<button data-number id="n8">8</button>
+				<button data-number id="n9">9</button>
+				<button data-number id="n0">0</button>
+				<button data-operation id="add">+</button>
+				<button data-operation id="subs">-</button>
+				<button data-operation id="multi">*</button>
+				<button data-operation id="div">/</button>
+				<button data-equals id="equal">=</button>
+				<button data-plusminus id="plusminus">+/-</button>
+				<button data-comma id="comma">,</button>
+				<button data-clear id="clear">clear</button>
 			</div>
 		</div>
 	</body>

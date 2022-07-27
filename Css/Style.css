@@ -73,7 +73,7 @@ html {
 	height: 100%;
 	padding: 1rem;
 }
-#Calculator input[type='button'] {
+#Calculator button {
 	box-shadow: 0 1px var(--clr-shadow);
 	border: solid var(--clr-darkestgreen);
 	border-radius: 1rem;
@@ -86,21 +86,21 @@ html {
 	color: var(--clr-darkestgreen);
 }
 
-#Calculator input[type='button']:hover {
+#Calculator button:hover {
 	background-color: var(--clr-darkgreen);
 	color: var(--clr-lightestgreen);
 }
-#Calculator input[type='button']:active {
+#Calculator button:active {
 	transform: translateY(1px);
 	box-shadow: 0 1px var(--clr-shadow);
 	background-color: var(--clr-darkgreen);
 }
 
-#Calculator input[type='button'].highlight {
+#Calculator button.highlight {
 	background-color: var(--clr-darkgreen);
 	color: var(--clr-lightestgreen);
 }
-#Calculator input[type='button'].disable {
+#Calculator button.disable {
 	background-color: var(--clr-darkgreen);
 	color: var(--clr-lightestgreen);
 	pointer-events: none;

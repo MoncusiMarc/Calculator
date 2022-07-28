@@ -63,7 +63,7 @@ function setAllButtonsStatus() { //number -> screenNumber
 		document.getElementById('clear').classList.remove('disable');
 	}
 	if (Number(number) == 0) {
-		document.getElementById('plusminus').classList.add('disable');
+		document.getElementById('plusMinus').classList.add('disable');
 	}
 	if (isReset) { 
 		document.getElementById('n0').classList.add('disable');

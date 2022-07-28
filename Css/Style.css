@@ -157,6 +157,6 @@ html {
 #clear {
 	grid-area: clear;
 }
-#plusminus {
+#plusMinus {
 	grid-area: pm;
 }

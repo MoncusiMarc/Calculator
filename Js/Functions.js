@@ -1,6 +1,4 @@
-//	ARCHIVO FUNCTIONS
-
-const MAX_DIGITS_ON_SCREEN = 10;
+const MAX_DIGITS_ON_SCREEN = 10
 
 const numberButtons = document.querySelectorAll('[data-number]')
 const num0Button = document.querySelector('#n0')
@@ -13,51 +11,51 @@ const displayElement = document.querySelector('[data-display]')
 
 const Calculator = new calculator(displayElement.innerText)
 
-window.onload = function() {
+window.onload = function () {
 	setAllButtonsStatus()
 }
 
 numberButtons.forEach(button => {
-    button.addEventListener('click',()=>{
-        Calculator.insertNumber(button.innerText)
-        Calculator.updateDisplay()
+	button.addEventListener('click', () => {
+		Calculator.insertNumber(button.innerText)
+		Calculator.updateDisplay()
 		setAllButtonsStatus()
-    })
+	})
 })
-commaButton.addEventListener('click',()=>{
-    Calculator.insertComma()
-    Calculator.updateDisplay()
+commaButton.addEventListener('click', () => {
+	Calculator.insertComma()
+	Calculator.updateDisplay()
 	setAllButtonsStatus()
 })
 
-plusMinusButton.addEventListener('click',()=>{
-    Calculator.insertNegation()
-    Calculator.updateDisplay()
+plusMinusButton.addEventListener('click', () => {
+	Calculator.insertNegation()
+	Calculator.updateDisplay()
 	setAllButtonsStatus()
 })
 
 operatorButtons.forEach(button => {
-    button.addEventListener('click',()=>{
-        Calculator.insertOperator(button.innerText)
+	button.addEventListener('click', () => {
+		Calculator.insertOperator(button.innerText)
 		Calculator.updateDisplay()
 		setAllButtonsHighlight(false)
 		setButtonHighlight(button, true)
 		setAllButtonsStatus()
-    })
+	})
 })
-equalsButton.addEventListener('click',()=>{
-        Calculator.calculate()
-        Calculator.updateDisplay()
-		setAllButtonsStatus()
-})
-
-clearButton.addEventListener('click',()=>{
-    Calculator.clearing()
-    Calculator.updateDisplay()
+equalsButton.addEventListener('click', () => {
+	Calculator.calculate()
+	Calculator.updateDisplay()
 	setAllButtonsHighlight(false)
 	setAllButtonsStatus()
 })
 
+clearButton.addEventListener('click', () => {
+	Calculator.clearing()
+	Calculator.updateDisplay()
+	setAllButtonsHighlight(false)
+	setAllButtonsStatus()
+})
 
 document.addEventListener(
 	'keydown',
@@ -79,7 +77,7 @@ document.addEventListener(
 				Calculator.insertNumber(name)
 				Calculator.updateDisplay()
 				setAllButtonsStatus()
-				break;
+				break
 			case '+':
 			case '-':
 			case '/':
@@ -126,81 +124,81 @@ document.addEventListener(
 )
 
 function digitCount(number) {
-	return number.replace(/[^0-9]/g, '').length;
+	return number.replace(/[^0-9]/g, '').length
 }
 
 function isNumberWellFormed(number) {
-	let ErrorStates = ['NaN', 'undefined', 'Infinity', '-Infinity'];
+	let ErrorStates = ['NaN', 'undefined', 'Infinity', '-Infinity']
 	if (ErrorStates.includes(number)) {
-		number = 'ERROR';
+		number = 'ERROR'
 	} else if (digitCount(number) > MAX_DIGITS_ON_SCREEN) {
 		if (number.includes('.')) {
 			while (digitCount(number) > MAX_DIGITS_ON_SCREEN && number.includes('.')) {
-				number = number.slice(0, -1);
+				number = number.slice(0, -1)
 			}
-			if (number.charAt(number.length - 1) == '.') number = number.slice(0, -1);
-			if (digitCount(number) > MAX_DIGITS_ON_SCREEN) number = 'ERROR';
+			if (number.charAt(number.length - 1) == '.') number = number.slice(0, -1)
+			if (digitCount(number) > MAX_DIGITS_ON_SCREEN) number = 'ERROR'
 		} else {
-			number = 'ERROR';
+			number = 'ERROR'
 		}
 	}
-	return String(number);
+	return String(number)
 }
 
 function exponentialNumberToDecimal(number) {
 	if (Math.abs(number) < 1.0) {
-		var e = parseInt(number.toString().split('e-')[1]);
+		var e = parseInt(number.toString().split('e-')[1])
 		if (e) {
-			number *= Math.pow(10, e - 1);
-			number = '0.' + new Array(e).join('0') + number.toString().substring(2);
+			number *= Math.pow(10, e - 1)
+			number = '0.' + new Array(e).join('0') + number.toString().substring(2)
 		}
 	} else {
-		var e = parseInt(number.toString().split('+')[1]);
+		var e = parseInt(number.toString().split('+')[1])
 		if (e > 20) {
-			e -= 20;
-			number /= Math.pow(10, e);
-			number += new Array(e + 1).join('0');
+			e -= 20
+			number /= Math.pow(10, e)
+			number += new Array(e + 1).join('0')
 		}
 	}
-	return number;
+	return number
 }
 
 function evaluate() {
-	let firstNumber = parseFloat(Calculator.getSavedNumber());
-	let secondNumber = parseFloat(Calculator.getDisplay());
-	let result = 0.0;
+	let firstNumber = parseFloat(Calculator.getSavedNumber())
+	let secondNumber = parseFloat(Calculator.getDisplay())
+	let result = 0.0
 	if (!isNaN(firstNumber) || !isNaN(secondNumber)) {
 		switch (Calculator.getSavedOperation()) {
 			case '+':
-				result = firstNumber + secondNumber;
-				break;
+				result = firstNumber + secondNumber
+				break
 			case '-':
-				result = firstNumber - secondNumber;
-				break;
+				result = firstNumber - secondNumber
+				break
 			case '*':
-				result = firstNumber * secondNumber;
-				break;
+				result = firstNumber * secondNumber
+				break
 			case '/':
-				result = firstNumber / secondNumber;
-				break;
+				result = firstNumber / secondNumber
+				break
 			default:
-				result = secondNumber;
-				break;
+				result = secondNumber
+				break
 		}
 	}
 	if (String(result).includes('e')) {
-		result = exponentialNumberToDecimal(result);
-		result = isNumberWellFormed(String(result));
+		result = exponentialNumberToDecimal(result)
+		result = isNumberWellFormed(String(result))
 		if (result.charAt(result.length - 1) == 0 && result.includes('.')) {
-			result = Number(result);
+			result = Number(result)
 		}
-		return result;
+		return result
 	}
-	result = Number(parseFloat(result).toFixed(10));
-	return isNumberWellFormed(String(result));
+	result = Number(parseFloat(result).toFixed(10))
+	return isNumberWellFormed(String(result))
 }
 
 function getButtons() {
-	const calculator = document.querySelector('div.Keyboard');
-	return calculator.querySelectorAll('input');
+	const calculator = document.querySelector('div.Keyboard')
+	return calculator.querySelectorAll('input')
 }

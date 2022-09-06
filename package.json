@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test:e2e": "cucumber-js --require cucumber.conf.js --require tests/steps/**/*.steps.js --tags \"not @Manual\" --parallel 1"
+    "test:e2e": "cucumber-js --require cucumber.conf.js --require tests/steps/**/*.steps.js --tags \"not @Manual\" --parallel 4"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^8.5.2",

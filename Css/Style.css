@@ -100,8 +100,8 @@ html {
 	background-color: var(--clr-darkgreen);
 	color: var(--clr-lightestgreen);
 }
-#Calculator button.disable {
-	background-color: var(--clr-darkgreen);
+#Calculator button:disabled {
+	background-color: var(--clr-lightgreen);
 	color: var(--clr-lightestgreen);
 	pointer-events: none;
 }

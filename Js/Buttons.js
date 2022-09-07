@@ -18,11 +18,7 @@ function setAllButtonsHighlight(highlight) {
 }
 
 function setButtonDisabled(button, disable) {
-	if (disable) {
-		button.classList.add('disable')
-	} else {
-		button.classList.remove('disable')
-	}
+		button.disabled = disable;
 }
 
 function setAllButtonsStatus() {

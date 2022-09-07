@@ -2,7 +2,7 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { expect } = require('@playwright/test');
 
-const url = 'http://127.0.0.1:5500/src/calculator.html';
+const url = 'http://127.0.0.1:5500/Index.html';
 
 async function buttonClick(buttonId) {
 	await page.click(`[data-testid="${buttonId}"]`, { force: true });

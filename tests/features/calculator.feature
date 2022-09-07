@@ -320,7 +320,7 @@ Given the display shows the following value: "3,141592"
 Then the "," button should be disabled
 
 Scenario: Disabling because of error
-Given the display shows the following value: 1
+Given the display shows the following value: "1"
 And the user presses the "/" button
 And the user writes the number: "0"
 When the user presses the "=" button

@@ -1,9 +1,10 @@
 {
   "scripts": {
-    "test:e2e": "cucumber-js --require cucumber.conf.js --require tests/steps/**/*.steps.js --tags \"not @Manual\" --parallel 4"
+    "test:e2e": "cucumber-js --require cucumber.conf.js --require tests/steps/**/*.steps.js --format @cucumber/pretty-formatter --format html:tests/reports/cucumber-report.html --tags \"not @Manual\" --parallel 4"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^8.5.2",
+    "@cucumber/pretty-formatter": "^1.0.0",
     "@playwright/test": "^1.25.2",
     "playwright": "^1.25.2"
   }
